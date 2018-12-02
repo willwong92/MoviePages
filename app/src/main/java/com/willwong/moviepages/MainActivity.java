@@ -6,36 +6,46 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.willwong.moviepages.utilities.NetworkUtilities;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewFragment.passDataToContainerActivity{
     public static final String TAG ="MainActivity";
     ViewPager viewPager;
+    ViewPagerAdapter viewPagerAdapter;
     private boolean mLogShown;
     EditText inputView;
     Button button;
+    ArrayList<String> imagesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.willwong.moviepages.R.layout.activity_main);
 
+        //ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)...build();
+        //ImageLoader.getInstance().init();
+
         button = (Button)findViewById(R.id.button_id);
 
         inputView = (EditText)findViewById(R.id.input_text);
 
         viewPager = (ViewPager) findViewById(com.willwong.moviepages.R.id.view_pager);
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
-
-        viewPager.setAdapter(viewPagerAdapter);
+        viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPagerAdapter.notifyDataSetChanged();
+        //viewPager.setAdapter(viewPagerAdapter);
 
 
 
@@ -56,6 +66,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+    }
+
+    @Override
+    public void getData(ArrayList<String> data) {
+        imagesList = new ArrayList<String>();
+        for(int i = 0; i < data.size(); i++) {
+            imagesList.add(NetworkUtilities.imageDownloadUrl(data.get(i)));
+
+        }
+
+
+        viewPagerAdapter.setData(imagesList);
+
+
+        viewPager.setAdapter(viewPagerAdapter);
+
+        viewPager.getAdapter().notifyDataSetChanged();
+
 
     }
 
