@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoviePages</string>
+    <string name="action_settings">Action Settings</string>
+    <string name="action_search">Action Search</string>
 </resources>
