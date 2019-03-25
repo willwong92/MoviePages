@@ -1,4 +1,5 @@
-package com.willwong.moviepages.model;
+package com.willwong.moviepages.Model;
+
 
 import com.squareup.moshi.Json;
 
@@ -6,8 +7,7 @@ import java.util.List;
 
 
 
-public class MoviesWrapper {
-
+public class MoviesResponse {
     @Json(name = "results")
     private List<Movie> movies;
 
@@ -18,4 +18,6 @@ public class MoviesWrapper {
     public void setMovieList(List<Movie> movieList) {
         this.movies = movieList;
     }
+
+
 }

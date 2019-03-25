@@ -1,4 +1,4 @@
-package com.willwong.moviepages;
+package com.willwong.moviepages.View;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.willwong.moviepages.model.Movie;
+import com.willwong.moviepages.R;
+import com.willwong.moviepages.Model.Movie;
 import com.willwong.moviepages.utilities.RestApi;
 
 import java.util.List;

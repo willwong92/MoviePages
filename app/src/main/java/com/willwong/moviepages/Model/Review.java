@@ -1,4 +1,4 @@
-package com.willwong.moviepages.model;
+package com.willwong.moviepages.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

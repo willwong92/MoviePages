@@ -1,8 +1,8 @@
-package com.willwong.moviepages;
+package com.willwong.moviepages.View;
 
 
+import android.content.SharedPreferences;
 import android.os.PersistableBundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.widget.SearchView;
@@ -10,27 +10,30 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 
-import com.willwong.moviepages.model.Movie;
+import com.willwong.moviepages.R;
+import com.willwong.moviepages.Model.Movie;
+import com.willwong.moviepages.utilities.InjectorUtils;
 import com.willwong.moviepages.utilities.MovieProperties;
 import com.willwong.moviepages.utilities.Topics;
 
-import java.util.ArrayList;
-
-public class MovieListActivity extends AppCompatActivity implements MovieListFragment.MovieCallBackListener{
+public class MovieListActivity extends AppCompatActivity implements MovieListFragment.MovieCallBackListener {
+    public static final String SORTING_PREFERENCES = "sortPrefs";
     public static final String TAG ="MovieListActivity";
     private static final String FRAGMENT_LIST = "list_fragment";
     private static final String CURRENT_MOVIE = "movie_current";
+    private SharedPreferences pref;
+    private int SORT_ORDER;
     private SearchView searchView;
     private MovieListFragment movieListFragment;
     private FragmentManager fragmentManager;
     private Movie currentMovie;
     private Movie selectMovie;
+
 
 
 
@@ -47,11 +50,12 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
 
             movieListFragment = new MovieListFragment();
             fragmentManager.beginTransaction().replace(R.id.fragment_container, movieListFragment, FRAGMENT_LIST)
-                    .addToBackStack(null)
                     .commit();
+            Log.d(TAG, "Launching fragment");
         } else {
             movieListFragment = activeFragment;
         }
+
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(CURRENT_MOVIE)) {
@@ -115,19 +119,25 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.popular_movies:
+
                 movieListFragment.updateListOfMoviesSort(Topics.POPULAR_ORDER);
             return true;
             case R.id.upcoming_movies:
+
                 movieListFragment.updateListOfMoviesSort(Topics.UPCOMING_ORDER);
                 return true;
             case R.id.toprated_movies:
+
                 movieListFragment.updateListOfMoviesSort(Topics.TOP_RATED_ORDER);
                 return true;
             case R.id.nowplaying_movies:
+
                 movieListFragment.updateListOfMoviesSort(Topics.NOW_PLAYING_ORDER);
                 return true;
         default:

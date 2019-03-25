@@ -1,4 +1,4 @@
-package com.willwong.moviepages.model;
+package com.willwong.moviepages.Model;
 
 import com.squareup.moshi.Json;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 
 
-public class VideoWrapper {
+public class VideosResponse {
 
     @Json(name = "results")
     private List<Video> videos;

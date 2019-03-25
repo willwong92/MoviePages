@@ -13,21 +13,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MovieListActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".View.MovieListActivity"
+            android:launchMode="singleTop"
+            android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieInfoActivity"
-            android:parentActivityName=".MovieListActivity">
+        <activity android:name=".View.MovieInfoActivity"
+            android:parentActivityName=".View.MovieListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MovieListActivity">
+                android:value=".View.MovieListActivity">
             </meta-data>
         </activity>
+        <service
+            android:exported="false"
+            android:name=".data.database.network.MovieFirebaseJobService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+        <service
+            android:exported="false"
+            android:name=".data.database.network.MovieSyncIntentService">
+        </service>
     </application>
 
 </manifest>
