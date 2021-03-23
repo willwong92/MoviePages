@@ -1,13 +1,13 @@
 package com.willwong.moviepages.View;
 
-import android.arch.lifecycle.*;
+import androidx.lifecycle.*;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +22,6 @@ import com.willwong.moviepages.View.viewmodel.MovieListActivityViewModelFactory;
 import com.willwong.moviepages.data.database.network.MovieAPIService;
 import com.willwong.moviepages.data.database.network.RetrofitClient;
 import com.willwong.moviepages.utilities.InjectorUtils;
-import com.willwong.moviepages.utilities.RestApi;
-import com.willwong.moviepages.utilities.Topics;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -33,9 +31,6 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import io.reactivex.*;
-import retrofit2.Retrofit;
 
 /**
  * Created by WillWong on 11/15/18.
@@ -126,7 +121,7 @@ public class MovieListFragment extends Fragment {
 
        LiveData<List<Movie>> response  = viewModel.getUpcomingMoviesList();
 
-       response.observe(this, new android.arch.lifecycle.Observer<List<Movie>>() {
+       response.observe(this, new androidx.lifecycle.Observer<List<Movie>>() {
            @Override
            public void onChanged(@Nullable List<Movie> movies) {
                if (movies != null) {
@@ -210,7 +205,7 @@ public class MovieListFragment extends Fragment {
         switch (sort_id) {
             case SORT_ORDER_POPULAR:
                 response = viewModel.getPopularMoviesList();
-                response.observe(this, new android.arch.lifecycle.Observer<List<Movie>>() {
+                response.observe(this, new androidx.lifecycle.Observer<List<Movie>>() {
                     @Override
                     public void onChanged(@Nullable List<Movie> movies) {
                         for (Movie movie : movies) {
@@ -303,7 +298,7 @@ public class MovieListFragment extends Fragment {
                         });
             case SORT_ORDER_TOPRATED:
                 response = viewModel.getTopRatedMoviesList();
-                response.observe(this, new android.arch.lifecycle.Observer<List<Movie>>() {
+                response.observe(this, new androidx.lifecycle.Observer<List<Movie>>() {
                     @Override
                     public void onChanged(@Nullable List<Movie> movies) {
                         for (Movie movie : movies) {
@@ -318,7 +313,7 @@ public class MovieListFragment extends Fragment {
                 });
             case SORT_ORDER_NOWPLAYING:
                 response = viewModel.getNowPlayingMoviesList();
-                response.observe(this, new android.arch.lifecycle.Observer<List<Movie>>() {
+                response.observe(this, new androidx.lifecycle.Observer<List<Movie>>() {
                     @Override
                     public void onChanged(@Nullable List<Movie> movies) {
                         for (Movie movie : movies) {

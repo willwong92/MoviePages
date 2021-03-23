@@ -1,6 +1,5 @@
 package com.willwong.moviepages.data.database.network;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;

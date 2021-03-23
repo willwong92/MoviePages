@@ -7,7 +7,7 @@
         android:icon="@drawable/baseline_search_black_18dp"
         android:title="@string/action_search"
         app:showAsAction="ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item android:id="@+id/popular_movies"
         android:title="Popular Movies"

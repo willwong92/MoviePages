@@ -1,7 +1,7 @@
 package com.willwong.moviepages.data.database.network;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -20,20 +20,12 @@ import com.willwong.moviepages.Model.MoviesResponse;
 import com.willwong.moviepages.utilities.RestApi;
 import com.willwong.moviepages.utilities.Topics;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Function4;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 

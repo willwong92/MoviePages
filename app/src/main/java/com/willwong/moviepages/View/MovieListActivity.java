@@ -3,21 +3,20 @@ package com.willwong.moviepages.View;
 
 import android.content.SharedPreferences;
 import android.os.PersistableBundle;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 
 import com.willwong.moviepages.R;
 import com.willwong.moviepages.Model.Movie;
-import com.willwong.moviepages.utilities.InjectorUtils;
 import com.willwong.moviepages.utilities.MovieProperties;
 import com.willwong.moviepages.utilities.Topics;
 

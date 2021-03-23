@@ -1,15 +1,12 @@
 package com.willwong.moviepages;
 
-import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.persistence.room.Room;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.room.Room;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.annotation.Nullable;
 
 import com.willwong.moviepages.Model.Movie;
-import com.willwong.moviepages.Model.MoviesResponse;
 import com.willwong.moviepages.data.database.MovieDAO;
 import com.willwong.moviepages.data.database.MovieDatabase;
 import com.willwong.moviepages.utilities.Topics;
@@ -22,7 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

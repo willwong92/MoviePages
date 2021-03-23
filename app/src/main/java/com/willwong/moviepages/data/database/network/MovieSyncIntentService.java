@@ -2,7 +2,7 @@ package com.willwong.moviepages.data.database.network;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.willwong.moviepages.utilities.InjectorUtils;

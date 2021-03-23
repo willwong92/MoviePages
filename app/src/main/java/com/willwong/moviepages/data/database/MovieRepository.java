@@ -1,14 +1,12 @@
 package com.willwong.moviepages.data.database;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.willwong.moviepages.AppExecutors;
 import com.willwong.moviepages.Model.Movie;
-import com.willwong.moviepages.Model.MoviesResponse;
 import com.willwong.moviepages.data.database.network.MovieNetworkDataSource;
-import com.willwong.moviepages.utilities.RestApi;
 import com.willwong.moviepages.utilities.Topics;
 
 import java.util.List;
