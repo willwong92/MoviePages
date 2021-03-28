@@ -3,6 +3,8 @@ package com.willwong.moviepages.View;
 
 import android.content.SharedPreferences;
 import android.os.PersistableBundle;
+
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import androidx.appcompat.widget.SearchView;
@@ -77,21 +79,33 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
     @Override
     public void getMovie(Movie movie) {
         if (movie != null) {
-            startMovieInfoActivity(movie);
+            addFragment(new MovieInfoFragment(),movie);
         } else {
             Log.d(TAG, "Movie is null");
         }
 
 
     }
-    public void startMovieInfoActivity(Movie movie) {
+
+    public void addFragment(Fragment fragment, Movie movie) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MovieProperties.Movie, movie);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.fragment_container,fragment,fragment.getTag()).
+                addToBackStack(null).
+                commit();
+    }
+    /*public void startMovieInfoFragment(Movie movie) {
+        fragmentManager = getSupportFragmentManager();
         currentMovie = movie;
         Bundle bundle = new Bundle();
         Intent intent = new Intent(MovieListActivity.this, MovieInfoActivity.class);
         bundle.putParcelable(MovieProperties.Movie,movie);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
+    }*/
 
 
     @Override
@@ -139,9 +153,22 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
 
                 movieListFragment.updateListOfMoviesSort(Topics.NOW_PLAYING_ORDER);
                 return true;
+            case android.R.id.home:
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                }
+                return true;
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+
     }
 
     @Override
