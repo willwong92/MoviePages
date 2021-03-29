@@ -30,10 +30,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
     private SharedPreferences pref;
     private int SORT_ORDER;
     private SearchView searchView;
-    private MovieListFragment movieListFragment;
     private FragmentManager fragmentManager;
-    private Movie currentMovie;
-    private Movie selectMovie;
 
 
 
@@ -42,38 +39,15 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.willwong.moviepages.R.layout.activity_movie_list);
-        initToolBar();
-
 
         fragmentManager = getSupportFragmentManager();
         MovieListFragment activeFragment = (MovieListFragment) fragmentManager.findFragmentByTag(FRAGMENT_LIST);
         if (activeFragment == null) {
-
-            movieListFragment = new MovieListFragment();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, movieListFragment, FRAGMENT_LIST)
-                    .commit();
+            addFragment(new MovieListFragment());
             Log.d(TAG, "Launching fragment");
-        } else {
-            movieListFragment = activeFragment;
         }
 
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(CURRENT_MOVIE)) {
-                selectMovie = savedInstanceState.getParcelable(CURRENT_MOVIE);
-            }
-        }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    public void initToolBar() {
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
     }
 
     @Override
@@ -86,7 +60,13 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
 
 
     }
-
+    public void addFragment(Fragment fragment ){
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.fragment_container,fragment,fragment.getTag()).
+                addToBackStack(null).
+                commit();
+    }
     public void addFragment(Fragment fragment, Movie movie) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(MovieProperties.Movie, movie);
@@ -97,87 +77,11 @@ public class MovieListActivity extends AppCompatActivity implements MovieListFra
                 addToBackStack(null).
                 commit();
     }
-    /*public void startMovieInfoFragment(Movie movie) {
-        fragmentManager = getSupportFragmentManager();
-        currentMovie = movie;
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(MovieListActivity.this, MovieInfoActivity.class);
-        bundle.putParcelable(MovieProperties.Movie,movie);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }*/
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                movieListFragment.updateListOfMoviesSearch(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-
-        return true;
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.popular_movies:
-
-                movieListFragment.updateListOfMoviesSort(Topics.POPULAR_ORDER);
-            return true;
-            case R.id.upcoming_movies:
-
-                movieListFragment.updateListOfMoviesSort(Topics.UPCOMING_ORDER);
-                return true;
-            case R.id.toprated_movies:
-
-                movieListFragment.updateListOfMoviesSort(Topics.TOP_RATED_ORDER);
-                return true;
-            case R.id.nowplaying_movies:
-
-                movieListFragment.updateListOfMoviesSort(Topics.NOW_PLAYING_ORDER);
-                return true;
-            case android.R.id.home:
-                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                    getSupportFragmentManager().popBackStack();
-                }
-                return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStackImmediate();
         }
-
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        if (currentMovie != null) {
-            outState.putParcelable(CURRENT_MOVIE, currentMovie);
-        }
-    }
-
-
 }

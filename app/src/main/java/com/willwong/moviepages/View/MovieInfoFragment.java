@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.annotation.Nullable;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -25,22 +26,21 @@ import androidx.appcompat.widget.Toolbar;
 import com.squareup.picasso.Picasso;
 import com.willwong.moviepages.R;
 import com.willwong.moviepages.Model.Movie;
-import com.willwong.moviepages.View.viewmodel.MovieInfoActivityViewModel;
-import com.willwong.moviepages.View.viewmodel.MovieInfoActivityViewModelFactory;
+import com.willwong.moviepages.View.viewmodel.MovieListActivityViewModel;
+import com.willwong.moviepages.View.viewmodel.MovieListActivityViewModelFactory;
 import com.willwong.moviepages.utilities.InjectorUtils;
 import com.willwong.moviepages.utilities.MovieProperties;
 import com.willwong.moviepages.utilities.RestApi;
 
 public class MovieInfoFragment extends Fragment {
     private static final String TAG = "MovieInfoActivity";
-    MovieInfoActivityViewModel movieInfoActivityViewModel;
+    MovieListActivityViewModel movieListActivityViewModel;
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbarLayout;
     ImageView backdrop;
     TextView overview;
     ImageView votingBackground;
     TextView votingText;
-    Movie movie;
 
     @Nullable
     @Override
@@ -48,6 +48,8 @@ public class MovieInfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movie_info, container, false);
 
         initToolBar(rootView);
+
+        setHasOptionsMenu(true);
 
         backdrop =  rootView.findViewById(R.id.backdrop_id);
         overview = rootView.findViewById(R.id.overview_id);
@@ -58,33 +60,25 @@ public class MovieInfoFragment extends Fragment {
 
         Movie movie = bundle.getParcelable(MovieProperties.Movie);
 
-        MovieInfoActivityViewModelFactory factory = InjectorUtils.provideDetailViewModelFactory(getActivity(), movie);
+        MovieListActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(getActivity());
 
-        movieInfoActivityViewModel = ViewModelProviders.of(this,factory).get(MovieInfoActivityViewModel.class);
+        movieListActivityViewModel = new ViewModelProvider(requireActivity(),factory).get(MovieListActivityViewModel.class);
 
-        overview.setText("Movie overview: " + movie.getOverview());
-
-        votingText.setText("Rating :" + new Double(movie.getReviewAverage()).toString());
-
-        Picasso.get().load(RestApi.getBackdropPath(movie.getBackDrop())).placeholder(R.drawable.image_uploading).
-                error(R.drawable.image_not_found).
-                into(backdrop);
-
-
-        final Observer<Movie> movieObserver = new Observer<Movie>() {
+        movieListActivityViewModel.getMovie(movie).observe(getActivity(), new Observer<Movie>() {
             @Override
-            public void onChanged(@Nullable Movie movie) {
+            public void onChanged(Movie movie) {
                 if (movie != null) {
+                    overview.setText("Movie overview: " + movie.getOverview());
 
+                    votingText.setText("Rating :" + new Double(movie.getReviewAverage()).toString());
 
-
-
+                    Picasso.get().load(RestApi.getBackdropPath(movie.getBackDrop())).placeholder(R.drawable.image_uploading).
+                            error(R.drawable.image_not_found).
+                            into(backdrop);
                     Log.d(TAG, "In movie");
                 }
-
             }
-        };
-        movieInfoActivityViewModel.getMovie().observe(getActivity(), movieObserver);
+        });
 
         return rootView;
 
@@ -109,6 +103,14 @@ public class MovieInfoFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

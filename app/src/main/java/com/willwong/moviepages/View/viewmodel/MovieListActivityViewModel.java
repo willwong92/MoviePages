@@ -34,4 +34,6 @@ public class MovieListActivityViewModel extends ViewModel {
     public LiveData<List<Movie>> getUpcomingMoviesList() { return mRepository.getUpcomingMoviesList(); }
 
     public LiveData<List<Movie>> getNowPlayingMoviesList() {return mRepository.getNowPlayingMovies(); }
+
+    public LiveData<Movie> getMovie(Movie movie) {return mRepository.getMovieData(movie.getId());}
 }

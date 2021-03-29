@@ -3,8 +3,6 @@ package com.willwong.moviepages.utilities;
 import android.content.Context;
 
 import com.willwong.moviepages.AppExecutors;
-import com.willwong.moviepages.Model.Movie;
-import com.willwong.moviepages.View.viewmodel.MovieInfoActivityViewModelFactory;
 import com.willwong.moviepages.View.viewmodel.MovieListActivityViewModelFactory;
 import com.willwong.moviepages.data.database.MovieDatabase;
 import com.willwong.moviepages.data.database.MovieRepository;
@@ -29,11 +27,6 @@ public class InjectorUtils {
         provideRepository(context.getApplicationContext());
         AppExecutors executors = AppExecutors.getInstance();
         return  MovieNetworkDataSource.getInstance(context.getApplicationContext(), executors);
-    }
-
-    public static MovieInfoActivityViewModelFactory provideDetailViewModelFactory(Context context, Movie movie) {
-        MovieRepository repository = provideRepository(context.getApplicationContext());
-        return new MovieInfoActivityViewModelFactory(repository, movie);
     }
 
     public static MovieListActivityViewModelFactory provideMainActivityViewModelFactory(Context context) {
